@@ -13,6 +13,9 @@ INSTALL_MYSQL='no'
 # any emails.
 INSTALL_POSTFIX='yes'
 
+# Install Ruby (yes/no)?
+INSTALL_RUBY='no'
+
 ### Directories ###############################################################
 
 # Destination directory (where to install the software)
@@ -116,3 +119,12 @@ SUHOSIN_VERSION='0.9.33'
 
 ###############################################################################
 
+# Ruby Version:
+# Ex: RUBY_VERSION='1.9.3-p194'
+RUBY_VERSION='1.9.3-p194'
+
+# Rbenv Bootstrap Version:
+# Ex: RBENV_BOOTSTRAP='bootstrap-ubuntu-12-04'
+RBENV_BOOTSTRAP='bootstrap-ubuntu-12-04'
+
+###############################################################################
