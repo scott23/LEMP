@@ -13,9 +13,6 @@ INSTALL_MYSQL='no'
 # any emails.
 INSTALL_POSTFIX='yes'
 
-# Install Ruby (yes/no)?
-INSTALL_RUBY='no'
-
 ### Directories ###############################################################
 
 # Destination directory (where to install the software)

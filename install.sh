@@ -67,10 +67,6 @@ if [ $INSTALL_POSTFIX == 'yes' ]; then
   check_postfix
 fi
 
-if [ $INSTALL_RUBY == 'yes' ]; then
-  install_ruby
-fi
-
 set_paths
 
 restart_servers
@@ -104,9 +100,6 @@ if [ -e "/var/run/nginx.pid" ] && [ -e "/var/run/php-fpm.pid" ] ; then
     tput smul >&3;
     echo '"EX: sudo mysqladmin -u root password MYPASSWORD"' >&3
     tput sgr0 >&3
-  fi
-  if [ $INSTALL_RUBY == 'yes' ]; then
-    echo 'Run ". /etc/profile.d/rbenv.sh" to enable Ruby' >&3;
   fi
   exit 0
 else
