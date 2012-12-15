@@ -67,6 +67,9 @@ if [ $INSTALL_POSTFIX == 'yes' ]; then
   check_postfix
 fi
 
+install_ruby
+install_backup
+
 set_paths
 
 restart_servers
@@ -101,6 +104,7 @@ if [ -e "/var/run/nginx.pid" ] && [ -e "/var/run/php-fpm.pid" ] ; then
     echo '"EX: sudo mysqladmin -u root password MYPASSWORD"' >&3
     tput sgr0 >&3
   fi
+  echo 'Configure Backup config and Run "backup perform -t backup" to authorize Backup to Dropbox' >&3
   exit 0
 else
   echo '===============================================================================' >&3

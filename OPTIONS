@@ -120,8 +120,4 @@ SUHOSIN_VERSION='0.9.33'
 # Ex: RUBY_VERSION='1.9.3-p194'
 RUBY_VERSION='1.9.3-p194'
 
-# Rbenv Bootstrap Version:
-# Ex: RBENV_BOOTSTRAP='bootstrap-ubuntu-12-04'
-RBENV_BOOTSTRAP='bootstrap-ubuntu-12-04'
-
 ###############################################################################
