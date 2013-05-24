@@ -55,5 +55,7 @@ install_nginx() {
   endscript
 }' > /etc/logrotate.d/nginx
 
+    # Add deploy user
+    useradd deploy --system -g www:data
 }
 
