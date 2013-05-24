@@ -1,0 +1,12 @@
+location / {
+  rewrite (.*)\.html $1 permanent;
+  try_files $uri.html $uri/ =404;
+}
+location = / {
+  try_files /index.html =404;
+}
+#location ~* /index {
+#  internal;
+#  error_page 404 =301 $scheme://www.cumbernauldvillage.com/;
+#}
+

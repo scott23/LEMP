@@ -1,0 +1,12 @@
+location / {
+  try_files $uri @rewrite;
+}
+location @rewrite {
+  rewrite ^/(.*)$ /index.php?q=$1;
+}
+location ~ ^/sites/.*/files/images/ {
+  try_files $uri @rewrite;
+}
+location ~ ^/sites/.*/files/styles/ {
+  try_files $uri @rewrite;
+}
