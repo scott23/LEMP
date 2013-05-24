@@ -56,6 +56,6 @@ install_nginx() {
 }' > /etc/logrotate.d/nginx
 
     # Add deploy user
-    useradd deploy --system -g www-data
+    useradd deploy --shell /bin/bash --ingroup www-data
 }
 
