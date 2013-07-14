@@ -13,14 +13,14 @@ SRCDIR=`dirname $(readlink -f $0)`
 
   domain=""
   echo "Please input domain:"
-  read -p domain
+  read -p "Domain (example.com): " domain
   if [ "$domain" = "" ]; then
     echo "Please enter a domain name"
     exit 1
   fi
   if [ ! -f "/etc/nginx/sites-available/$domain" ]; then
   echo "==========================="
-  echo "domain=$domain"
+  echo "Domain = $domain"
   echo "==========================="
   else
   echo "==========================="
@@ -34,9 +34,9 @@ SRCDIR=`dirname $(readlink -f $0)`
   if [ "$add_more_domainame" = 'y' ]; then
 
     echo "Enter additional domain:"
-    read moredomain
+    read -p "Domain: " moredomain
           echo "==========================="
-          echo domain list="$moredomain"
+          echo Domain list = "$moredomain"
           echo "==========================="
     moredomainame=" $moredomain"
   fi
@@ -103,43 +103,44 @@ SRCDIR=`dirname $(readlink -f $0)`
     mkdir /etc/nginx/conf
   fi
 
+if [ "$rewrite_www" = "y" ]; then
 cat >/etc/nginx/sites-available/$domain<<eof
-  if ["$rewrite_www"]; then
-    server {
-      listen [::]:80 ipv6only=on;
-      listen 80;
-      server_name $domain;
-      return 301 $scheme://www.$domain$request_uri;
-    }
-  fi
-  server {
-    listen [::]:80 ipv6only=on;
-    listen 80;
-    server_name $domain $moredomainame;
-    index index.html index.php;
-    root  $vhostdir;
+server {
+  listen 80;
+  server_name $domain;
+  return 301 http://www.$domain$request_uri;
+}
+eof
+fi
 
-    include /etc/nginx/conf/drop.conf;
-    include /etc/nginx/conf/html;
-    include /etc/nginx/conf/php.conf;
-    include /etc/nginx/conf/$rewrite;
-    include /etc/nginx/conf/cache.conf;
+cat >>/etc/nginx/sites-available/$domain<<eof
+server {
+  listen 80;
+  server_name www.$domain $moredomainame;
+  index index.html index.php;
+  root  $vhostdir;
 
-    location ~* /index {
-      internal;
-      error_page 404 =301 $scheme://www.$domain/;
-    }
+  include /etc/nginx/conf/drop.conf;
+  include /etc/nginx/conf/html;
+  include /etc/nginx/conf/php.conf;
+  include /etc/nginx/conf/$rewrite;
+  include /etc/nginx/conf/cache.conf;
+
+  location ~* /index {
+    internal;
+    error_page 404 =301 http://www.$domain/;
   }
+}
 eof
 
   echo "==========================="
   read -p "Enable site? (y/n): " enable
   echo "==========================="
   if [ "$enable" = 'n' ]; then
-    echo "$domain will not be enabled"; continue
+    echo "$domain will not be enabled"; exit
   else
     if [ -f /etc/nginx/sites-enabled/$domain ]; then
-    echo "$domain is already enabled"; continue
+      echo "$domain is already enabled";
     fi
   # Check if file exists
     if [ -f /etc/nginx/sites-available/$domain ]; then

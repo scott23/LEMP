@@ -30,12 +30,16 @@ install_nginx() {
   mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
   cp ${SRCDIR}/conf_files/default /etc/nginx/sites-available/default
   ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+  cp ${SRCDIR}/conf_files/example.com /etc/nginx/sites-available/example.com
   cp ${SRCDIR}/conf_files/rewrites/* /etc/nginx/conf/
+  cp ${SRCDIR}/conf_files/template /etc/nginx/sites-available/
 
-  cp ${SRCDIR}/ext/nxensite ${DESTINATION_DIR}/nginx/sbin/nxensite
-  cp ${SRCDIR}/ext/nxdissite ${DESTINATION_DIR}/nginx/sbin/nxdissite
-  cp ${SRCDIR}/ext/vhost.sh ${DESTINATION_DIR}/nginx/sbin/vhost.sh
-  chmod +x ${DESTINATION_DIR}/nginx/sbin/*
+  cp ${SRCDIR}/ext/nxensite /usr/bin/nxensite
+  cp ${SRCDIR}/ext/nxdissite /usr/bin/nxdissite
+  cp ${SRCDIR}/ext/vhost /usr/bin/vhost
+  chmod +x /usr/bin/nxensite
+  chmod +x /usr/bin/nxdissite
+  chmod +x /usr/bin/vhost
 
   cp ${SRCDIR}/web_files/* $WEB_DIR
 

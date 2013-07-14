@@ -1,0 +1,22 @@
+server {
+  listen 80;
+  server_name $domain;
+  return 301 http://www.$domain;
+}
+server {
+  listen 80;
+  server_name www.$domain ;
+  index index.html index.php;
+  root  /var/www/$domain;
+
+  include /etc/nginx/conf/drop.conf;
+  include /etc/nginx/conf/html;
+  include /etc/nginx/conf/php.conf;
+  include /etc/nginx/conf/none;
+  include /etc/nginx/conf/cache.conf;
+
+  location ~* /index {
+    internal;
+    error_page 404 =301 http://www.$domain/;
+  }
+}
