@@ -1,9 +1,25 @@
 #!/bin/bash
 
+# Install MariaDB Server (yes/no)?
+# MariaDB (MySQL) Client is installed by default to allow
+# the connection between PHP and any MariaDB server.
+INSTALL_MARIADB='no'
+
+# MariaDB Version:
+# Ex: MARIADB_VERSION='5.3'
+MARIADB_VERSION='5.5'
+
 # Install MySQL Server (yes/no)?
 # MySQL Client is installed by default to allow
 # the connection between PHP and any MySQL server.
 INSTALL_MYSQL='no'
+
+# Install phpMyAdmin (yes/no)?
+INSTALL_PHPMYADMIN='no'
+
+# phpMyAdmin Version:
+# Ex: PHPMYADMIN_VERSION='4.0.5'
+PHPMYADMIN_VERSION='4.0.5'
 
 # Memcached Server (yes/no)?
 # The PECL extension for PHP is installed by default to allow
@@ -28,8 +44,8 @@ WEB_DIR='/var/www'
 ### Program Versions: #########################################################
 
 # NginX Version:
-# Ex: NGINX_VERSION='1.4.1'
-NGINX_VERSION='1.5.2'
+# Ex: NGINX_VERSION='1.4.2'
+NGINX_VERSION='1.5.4'
 
 # NginX Configure arguments:
 NGINX_CONFIGURE_ARGS="--prefix=${DESTINATION_DIR}/nginx
@@ -50,8 +66,8 @@ NGINX_CONFIGURE_ARGS="--prefix=${DESTINATION_DIR}/nginx
 ###############################################################################
 
 # PHP Version:
-# Ex: PHP_VERSION='5.4.17'
-PHP_VERSION='5.5.0'
+# Ex: PHP_VERSION='5.4.19'
+PHP_VERSION='5.5.3'
 
 # PHP Configure arguments:
 PHP_CONFIGURE_ARGS="--prefix=${DESTINATION_DIR}/php5
