@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # PHP Libraries
-PHP_LIBRARIES="libmysqlclient-dev mysql-client libcurl4-openssl-dev libgd2-xpm-dev libjpeg-dev libpng3-dev libxpm-dev libfreetype6-dev libt1-dev libmcrypt-dev libxslt1-dev bzip2 libbz2-dev libxml2-dev libevent-dev libltdl-dev libmagickwand-dev libmagickcore-dev imagemagick libreadline-dev libc-client-dev libsnmp-dev snmpd snmp libpq-dev"
+PHP_LIBRARIES="libcurl4-openssl-dev libgd2-xpm-dev libjpeg-dev libpng3-dev libxpm-dev libfreetype6-dev libt1-dev libmcrypt-dev libxslt1-dev bzip2 libbz2-dev libxml2-dev libevent-dev libltdl-dev libmagickwand-dev libmagickcore-dev imagemagick libreadline-dev libc-client-dev libsnmp-dev snmpd snmp libpq-dev"
+
+# MariaDB ships with its own client that conflicts with the standard one.
+[ $INSTALL_MARIADB = 'no' ] && PHP_LIBRARIES="mysql-client libmysqlclient-dev $PHP_LIBRARIES"
+[ $INSTALL_MARIADB = 'yes' ] && PHP_LIBRARIES="libmariadbclient-dev $PHP_LIBRARIES"
 
 install_php() {
   # Install all PHP Libraries
@@ -10,7 +14,7 @@ install_php() {
 
   # Get PHP package
   echo "Downloading and extracting PHP-${PHP_VERSION}..." >&3
-  wget -O ${TMPDIR}/php-${PHP_VERSION}.tar.gz "http://us.php.net/distributions/php-${PHP_VERSION}.tar.gz" & progress
+  wget -O ${TMPDIR}/php-${PHP_VERSION}.tar.gz "http://us1.php.net/distributions/php-${PHP_VERSION}.tar.gz" & progress
   cd $TMPDIR
   tar xzvf php-${PHP_VERSION}.tar.gz
   check_download "PHP5" "${TMPDIR}/php-${PHP_VERSION}.tar.gz" "${TMPDIR}/php-${PHP_VERSION}/configure"
@@ -63,7 +67,6 @@ install_php() {
   chown -R www-data:www-data /var/log/php5-fpm & progress
 
   # Create log rotation script
-  echo 'Creating logrotate script...' >&3
   echo '/var/log/php5-fpm/*.log {
 weekly
 missingok
@@ -78,6 +81,5 @@ postrotate
 endscript
 }' > /etc/logrotate.d/php5-fpm
 
-  echo -e '\E[47;34m\b\b\b\b'"Done" >&3; tput sgr0 >&3
 }
 

@@ -1,12 +1,30 @@
 #!/bin/bash
 
-# Enable the script (yes/no)?
-ENABLED='no'
+# Install MariaDB Server (yes/no)?
+# MariaDB (MySQL) Client is installed by default to allow
+# the connection between PHP and any MariaDB server.
+INSTALL_MARIADB='no'
+
+# MariaDB Version:
+# Ex: MARIADB_VERSION='5.3'
+MARIADB_VERSION='5.5'
 
 # Install MySQL Server (yes/no)?
 # MySQL Client is installed by default to allow
-# the connection between PHP and the MySQL server.
+# the connection between PHP and any MySQL server.
 INSTALL_MYSQL='no'
+
+# Install phpMyAdmin (yes/no)?
+INSTALL_PHPMYADMIN='no'
+
+# phpMyAdmin Version:
+# Ex: PHPMYADMIN_VERSION='4.0.5'
+PHPMYADMIN_VERSION='4.0.5'
+
+# Memcached Server (yes/no)?
+# The PECL extension for PHP is installed by default to allow
+# the connection between PHP and any Memcached server.
+INSTALL_MEMCACHED_SERVER='no'
 
 # Install Postfix (yes/no)?
 # Postfix will be installed as a null (send-only) client. It will not receive
@@ -26,8 +44,8 @@ WEB_DIR='/var/www'
 ### Program Versions: #########################################################
 
 # NginX Version:
-# Ex: NGINX_VERSION='1.2.6'
-NGINX_VERSION='1.3.10'
+# Ex: NGINX_VERSION='1.4.2'
+NGINX_VERSION='1.5.4'
 
 # NginX Configure arguments:
 NGINX_CONFIGURE_ARGS="--prefix=${DESTINATION_DIR}/nginx
@@ -48,8 +66,8 @@ NGINX_CONFIGURE_ARGS="--prefix=${DESTINATION_DIR}/nginx
 ###############################################################################
 
 # PHP Version:
-# Ex: PHP_VERSION='5.3.20'
-PHP_VERSION='5.4.10'
+# Ex: PHP_VERSION='5.4.19'
+PHP_VERSION='5.5.3'
 
 # PHP Configure arguments:
 PHP_CONFIGURE_ARGS="--prefix=${DESTINATION_DIR}/php5
@@ -101,18 +119,6 @@ PHP_CONFIGURE_ARGS="--prefix=${DESTINATION_DIR}/php5
 --enable-sysvsem
 --enable-sysvshm
 --enable-sysvmsg"
-
-###############################################################################
-
-# APC Version:
-# Ex: APC_VERSION='3.1.9'
-APC_VERSION='3.1.14'
-
-###############################################################################
-
-# Suhosin Version:
-# Ex: SUHOSIN_VERSION='0.9.33'
-SUHOSIN_VERSION='0.9.33'
 
 ###############################################################################
 

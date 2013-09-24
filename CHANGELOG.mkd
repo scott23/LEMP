@@ -1,5 +1,22 @@
 ## Release Notes: ##
 
+### 7.2.0 ###
+
+  * Add support for PHP 5.5+ (without APC as it is not yet compatible).
+  * Replace NginX configuration with H5BP's one (Closes #47).
+  * Improve restart process (Closes #45).
+  * Ubuntu 13.04 Raring Ringtail tests.
+
+### 7.1.0 ###
+
+  * Add option to install Memcached Server
+  * Add memcached pecl extensions into PHP
+  * Remove "ENABLED" from OPTIONS
+  * APC is now installed via PECL repository
+  * The update_apc script is removed (in favour of `pecl upgrade`)
+  * Suhosin is now removed completely
+  * Updated init scripts for NginX and PHP
+
 ### 7.0.5 ###
 
   * PostgreSQL, regular and PDO support (Closes #34).

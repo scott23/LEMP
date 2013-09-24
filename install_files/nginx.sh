@@ -21,24 +21,32 @@ install_nginx() {
   echo 'Installing NginX...' >&3
   make install & progress
 
-  # Copy configuration files
-  sed -i "s~^INSTALL_DIR=.$~INSTALL_DIR=\"${DESTINATION_DIR}/nginx\"~" ${SRCDIR}/init_files/nginx
+  # Set-up init scripts
+  sed -i "s~@DESTINATION_DIR@~${DESTINATION_DIR}~" ${SRCDIR}/init_files/nginx
   cp ${SRCDIR}/init_files/nginx /etc/init.d/nginx
   chmod +x /etc/init.d/nginx
   update-rc.d -f nginx defaults
-  cp ${SRCDIR}/conf_files/nginx.conf /etc/nginx/nginx.conf
-  mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
-  cp ${SRCDIR}/conf_files/default /etc/nginx/sites-available/default
+
+  # Copy configuration files
+  [ -d /etc/nginx ] && mv /etc/nginx /etc/nginx-backup
+  cp -r ${SRCDIR}/conf_files/nginx /etc/nginx
+  mkdir -p /etc/nginx/sites-enabled
   ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
+  # Copy over some helper scripts.
   cp ${SRCDIR}/ext/nxensite ${DESTINATION_DIR}/nginx/sbin/nxensite
   cp ${SRCDIR}/ext/nxdissite ${DESTINATION_DIR}/nginx/sbin/nxdissite
+  cp ${SRCDIR}/ext/nxmksite ${DESTINATION_DIR}/nginx/sbin/nxmksite
   chmod +x ${DESTINATION_DIR}/nginx/sbin/*
+
+  # Make the helper scripts accessable on the path.
+  ln -s ${DESTINATION_DIR}/nginx/sbin/nxensite /usr/sbin/nxensite
+  ln -s ${DESTINATION_DIR}/nginx/sbin/nxdissite /usr/sbin/nxdissite
+  ln -s ${DESTINATION_DIR}/nginx/sbin/nxmksite /usr/sbin/nxmksite
 
   cp ${SRCDIR}/web_files/* $WEB_DIR
 
   # Create log rotation script
-  echo 'Creating logrotate script...' >&3
   chown -R www-data:www-data /var/log/nginx
   echo '/var/log/nginx/*.log {
   weekly
